@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import days from "./data";
 const colors = [
   "papayawhip",
@@ -54,11 +55,22 @@ function App() {
     setColor(colors[index])
   }, [today.month])
 
-  function getFeaturedDog() {
-    fetch(`https://dog.ceo/api/breeds/image/random`)
-      .then((response) => response.json())
-      .then((json) => setDog(json))
-      .catch((err) => console.log("error fetching dogs"))
+  // function getFeaturedDog() {
+  //   fetch(`https://dog.ceo/api/breeds/image/random`)
+  //     .then((response) => response.json())
+  //     .then((json) => setDog(json))
+  //     .catch((err) => console.log("error fetching dogs"))
+  // }
+
+  async function getFeaturedDog() {
+    try {
+
+      const response = await axios(`https://dog.ceo/api/breeds/image/random`)
+      console.log(response);
+      setDog(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   useEffect(() => {
